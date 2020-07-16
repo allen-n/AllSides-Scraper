@@ -25,8 +25,10 @@ var options = {
   form: {}
 };
 
-const pages = ['', '1', '2', '3']
-
+const pages = ['']
+for (var i = 1; i < 30; i++) {
+  pages.push(String(i))
+}
 pages.forEach(function (page) {
 
   var optionsPages = _.deepExtend(options, { qs: { page: page } });
@@ -39,6 +41,7 @@ pages.forEach(function (page) {
     var dataObj = { title: null, rating: null, url: null };
 
     $('.source-title').each(function (i, element) {
+      ``
       var title = element.parent.children[0].next.children[0].next.children[0].data;
       var rating = element.parent.children[2].next.children[0].next.children[0].attribs.title;
 
@@ -73,11 +76,12 @@ pages.forEach(function (page) {
         //write to file
         fs.writeFile('biasRatings.json', JSON.stringify(data), function (err) {
           if (err) throw new Error(error);
-          // console.log('Writing to file...');
+          if (page === pages[pages.length - 1]) {
+            console.log("Domains stored: ", Object.keys(data).length);
+          } else {
+            console.log('Writing to file...');
+          }
         });
-        if (page === pages[pages.length - 1]) {
-          console.log("Domains stored: ", Object.keys(data).length);
-        }
       });
     });
   });
